@@ -16,12 +16,12 @@ export function AddItemForm (props: AddItemFormPropsType) {
             setError("Title is required!")
         }
     }
-    const onKeyPressAddItem = (e: KeyboardEvent<HTMLInputElement>) => {
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             addItem()
         }
     }
-    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
         setError(null)
     }
@@ -30,8 +30,8 @@ export function AddItemForm (props: AddItemFormPropsType) {
         <div>
             <input className={error ? "error" : ""}
                    value={title}
-                   onChange={changeTitle}
-                   onKeyPress={onKeyPressAddItem}/>
+                   onChange={onChangeHandler}
+                   onKeyPress={onKeyPressHandler}/>
             <button onClick={addItem}>+</button>
             {error && <div className={"error-message"}>{error}</div>}
         </div>

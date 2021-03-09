@@ -94,7 +94,6 @@ function App() {
             setTasks({...tasks})
         }
     }
-
     function changeTodoListTitle(newTitle: string, todoListID: string) {
         let todolist = todoLists.find(tl => tl.id === todoListID)
         if (todolist) {
@@ -129,7 +128,10 @@ function App() {
     // CRUD:
     return (
         <div className="App">
-            <AddItemForm addItem={addTodoList}/>
+            <div>
+                <h3>Add todolist</h3>
+                <AddItemForm addItem={addTodoList}/>
+            </div>
             {todolisComponents}
         </div>
     );

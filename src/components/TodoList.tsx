@@ -29,7 +29,7 @@ function Todolist(props: TodoListPropsType) {
             <li className={t.isDone ? "is-done" : ""}>
                 <input onChange={changeTaskStatus} type="checkbox" checked={t.isDone} />
                 <EditableSpan title={t.title} changeTitle={changeTaskTitle}/>
-                <button onClick={removeTask}>X</button>
+                <button onClick={removeTask}>x</button>
             </li>)
     })
     const removeTodoList = () => props.removeTodoList(props.id)
@@ -42,7 +42,7 @@ function Todolist(props: TodoListPropsType) {
     }
 
     return (
-        <div>
+        <div className={'task'}>
             <h3>
                 <EditableSpan title={props.title} changeTitle={changeTodolistTitle}/>
                 <button onClick={removeTodoList}>x</button></h3>
