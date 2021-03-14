@@ -10,7 +10,7 @@ export function EditableSpan (props: EditableSpanPropsType) {
     const [editMode, setEditMode] = useState<boolean>(false)
     const [title, setTitle] = useState<string>(props.title)
 
-    const onEditMode = () => setEditMode(true)
+    const onEditModee = () => setEditMode(true)
     const offEditMode = () => {
         setEditMode(false)
         props.changeTitle(title)
@@ -27,6 +27,6 @@ export function EditableSpan (props: EditableSpanPropsType) {
                  onKeyPress={e => {if(e.key === "Enter"){offEditMode()}}}
                  onBlur={offEditMode}
             />
-        : <span onDoubleClick={onEditMode}>{props.title}</span>
+        : <span onDoubleClick={onEditModee}>{props.title}</span>
     )
 }
