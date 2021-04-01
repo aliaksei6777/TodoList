@@ -17,7 +17,7 @@ export type TodoListType = {
     title: string
     filter: FilterValuesType
 }
-type TaskStateType = {
+export type TaskStateType = {
     [key: string]: TaskType[]
 }
 
@@ -146,7 +146,10 @@ function App() {
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: "20px"}}>
-                    <AddItemForm addItem={addTodoList}/>
+                    <div>
+                        <h3>add new todolist</h3>
+                        <div><AddItemForm addItem={addTodoList}/></div>
+                    </div>
                 </Grid>
                 <Grid container spacing={3}>
                     {todolisComponents}
