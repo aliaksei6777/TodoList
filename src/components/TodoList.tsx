@@ -1,31 +1,31 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {FilterValuesType, TaskType} from "../App";
+import React, {ChangeEvent} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Button, Checkbox, IconButton, ListItemText} from "@material-ui/core";
+import {Button, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
+import {FilterValuesType, TaskType} from "../App";
 
 type TodoListPropsType = {
     id: string
     title: string
-    filter: FilterValuesType
     tasks: Array<TaskType>
-    removeTask: (taskID: string, todoListID: string) => void
-    changeTodoListFilter: (newFilterValue: FilterValuesType, todoListID: string) => void
-    addTask: (title: string, todoListID: string) => void
-    changeTaskStatus:(taskID: string, isDone: boolean, todoListID: string) => void
-    removeTodoList:(todoListID: string) => void
-    changeTaskTitle: (taskID: string, newTitle: string, todoListID: string) => void
-    changeTodoListTitle: (newTitle: string, todoListID: string) => void
+    filter: FilterValuesType
+    removeTask: (id: string, taskID: string) => void
+    changeTodoListFilter: (id: string, newFilterValue: FilterValuesType) => void
+    addTask: (id: string, title: string) => void
+    changeTaskStatus:(id: string, taskID: string, isDone: boolean) => void
+    removeTodoList:(id: string) => void
+    changeTaskTitle: (id: string, taskID: string, newTitle: string) => void
+    changeTodoListTitle: (id: string, newTitle: string) => void
 }
 
 function Todolist(props: TodoListPropsType) {
 
     const tasks = props.tasks.map(t => {
-        const removeTask = () => props.removeTask(t.id, props.id)
-        const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(t.id, e.currentTarget.checked, props.id)
+        const removeTask = () => props.removeTask(props.id,t.id)
+        const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(props.id, t.id, e.currentTarget.checked )
         const changeTaskTitle = (newTitle: string) => {
-            props.changeTaskTitle(t.id, newTitle, props.id)
+            props.changeTaskTitle(props.id, t.id, newTitle)
         }
         return (
             <div key={t.id}>
@@ -37,12 +37,12 @@ function Todolist(props: TodoListPropsType) {
             </div>)
     })
     const removeTodoList = () => props.removeTodoList(props.id)
-    const onAllClickHandler = () => {props.changeTodoListFilter('all', props.id)}
-    const onActiveClickHandler = () => {props.changeTodoListFilter('active', props.id)}
-    const onCompletedClickHandler = () => {props.changeTodoListFilter('completed', props.id)}
-    const addTask = (title: string) => props.addTask(title, props.id)
+    const onAllClickHandler = () => {props.changeTodoListFilter(props.id,'all' )}
+    const onActiveClickHandler = () => {props.changeTodoListFilter(props.id,'active' )}
+    const onCompletedClickHandler = () => {props.changeTodoListFilter(props.id,'completed' )}
+    const addTask = (title: string) => props.addTask(props.id,title)
     const changeTodolistTitle = (title: string) => {
-        props.changeTodoListTitle(title, props.id)
+        props.changeTodoListTitle(props.id,title)
     }
 
     return (

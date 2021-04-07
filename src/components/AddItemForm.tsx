@@ -31,7 +31,7 @@ export function AddItemForm (props: AddItemFormPropsType) {
     return (
         <div>
             <TextField variant={'outlined'}
-                       label={'type title'}
+                       label={'title'}
                        error={!!error}
                        helperText={error}
                        value={title}
