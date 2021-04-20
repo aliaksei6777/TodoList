@@ -29,7 +29,6 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
         }
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-
         setTitle(e.currentTarget.value)
     }
 
