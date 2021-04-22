@@ -5,7 +5,7 @@ import {Delete} from "@material-ui/icons";
 import {TaskType} from "../App";
 
 
-type TaskPropsType = {
+export type TaskPropsType = {
     task: TaskType
     id: string
     changeTaskTitle: (id: string, taskID: string, newTitle: string) => void
