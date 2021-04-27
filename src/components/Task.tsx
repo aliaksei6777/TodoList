@@ -21,10 +21,10 @@ export const Task:React.FC<TaskPropsType> = React.memo(({task,id,changeTaskTitle
     const changeTitle = useCallback((newTitle: string) => {
         changeTaskTitle(id, task.id, newTitle)},[changeTaskTitle,task.id,id])
     return (
-        <div key={task.id}>
+        <div key={task.id} style={{position: 'relative'}}>
             <Checkbox onChange={changeTaskStatusHandler} checked={task.isDone} />
             <EditableSpan title={task.title} changeTitle={changeTitle}/>
-            <IconButton onClick={onRemoveTaskClickHandler}>
+            <IconButton onClick={onRemoveTaskClickHandler} style={{ position: 'absolute', right: '5px'} }>
                 <Delete/>
             </IconButton>
         </div>)

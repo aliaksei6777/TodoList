@@ -51,14 +51,20 @@ export const Todolist = React.memo((props: TodoListPropsType) => {
         props.changeTodoListFilter(props.id,'completed' )},[props.changeTodoListFilter,props.id])
 
     return (
-        <div>
+        <div style={{padding: '10px', position: 'relative'}}>
             <h3>
                 <EditableSpan title={props.title} changeTitle={changeTodolistTitle}/>
-                <IconButton onClick={removeTodoList}>
+                <IconButton onClick={removeTodoList}
+                            style={{position: 'absolute', right: '2px', top: '2px'}}
+                            size={"small"}
+                >
                     <Delete/>
                 </IconButton></h3>
             <AddItemForm addItem={addTask}/>
-            <ul>{tasks}</ul>
+            <div>
+                {tasks}
+                {!tasksForTodoList.length && <div style={{padding: '10px', color: 'grey'}}>No task</div>}
+            </div>
             <div>
                 <Button onClick={onAllClickHandler}
                         size={"small"}
