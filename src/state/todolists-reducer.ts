@@ -1,75 +1,79 @@
 import {v1} from "uuid";
-import {FilterValuesType, TodoListType} from "../App";
+import {TodoListType} from "../api/todolist-api";
 
 export type RemoveTodoListActionType = {
     type: "REMOVE-TODOLIST"
-    id: string
+    todoListId: string
 }
 export type AddTodoListActionType = {
     type: "ADD-TODOLIST",
-    id: string,
+    todoListId: string,
     title: string
 
 }
 type ChangeTodoListTitleActionType = {
     type: "CHANGE-TODOLIST-TITLE"
-    id: string
+    todoListId: string
     title: string
 }
 type ChangeTodoListFilterActionType = {
     type: "CHANGE-TODOLIST-FILTER"
-    id: string
+    todoListId: string
     filter: FilterValuesType
 }
 
 export type ActionType = RemoveTodoListActionType | AddTodoListActionType
     | ChangeTodoListTitleActionType | ChangeTodoListFilterActionType
 
-const initialState: Array<TodoListType> = []
+export type FilterValuesType = "all" | "active" | "completed"
 
-export const todoListsReducer = (state: Array<TodoListType> = initialState, action: ActionType):Array<TodoListType> => {
+export type TodolistDomainType = TodoListType & {filter: FilterValuesType}
+
+const initialState: Array<TodolistDomainType> = []
+
+export const todoListsReducer = (state: Array<TodolistDomainType> = initialState, action: ActionType):Array<TodolistDomainType> => {
     switch (action.type) {
         case "REMOVE-TODOLIST":{
-            return state.filter(tl => tl.id !== action.id)
+            return state.filter(tl => tl.todoListId !== action.todoListId)
         }
         case "ADD-TODOLIST": {
-            return [...state, {id: action.id, title: action.title, filter: "all"}]
+            return [...state, {todoListId: action.todoListId, title: action.title, filter: "all", addedDate: '', order: 0}]
         }
         case "CHANGE-TODOLIST-TITLE": {
-            return state.map(tl => tl.id === action.id ? {...tl,title: action.title} : {...tl})
+            return state.map(tl => tl.todoListId === action.todoListId ? {...tl,title: action.title} : {...tl})
         }
         case "CHANGE-TODOLIST-FILTER": {
-            return state.map(tl => tl.id === action.id ? {...tl,filter: action.filter} : tl)
+            return state.map(tl => tl.todoListId === action.todoListId ? {...tl,filter: action.filter} : tl)
         }
         default:
             return state
     }
 }
 
-export const removeTodoListAC = (id: string): RemoveTodoListActionType => {
+export const removeTodoListAC = (todoListId: string): RemoveTodoListActionType => {
     return {
         type: "REMOVE-TODOLIST",
-        id
+        todoListId
     }
 }
 export const addTodoListAC = (title: string): AddTodoListActionType => {
     return {
         type: "ADD-TODOLIST",
-        id: v1(),
+        todoListId: v1(),
         title
     }
 }
-export const changeTodoListTitleAC = (id: string, title: string): ChangeTodoListTitleActionType => {
+export const changeTodoListTitleAC = (todoListId: string, title: string): ChangeTodoListTitleActionType => {
     return {
         type: "CHANGE-TODOLIST-TITLE",
-        id,
+        todoListId,
         title
     }
 }
-export const changeTodoListFilterAC = (id: string, filter: FilterValuesType): ChangeTodoListFilterActionType => {
+export const changeTodoListFilterAC = (todoListId: string, filter: FilterValuesType): ChangeTodoListFilterActionType => {
     return {
         type: "CHANGE-TODOLIST-FILTER",
-        id,
+        todoListId,
         filter
     }
 }

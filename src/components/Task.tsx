@@ -2,27 +2,30 @@ import React, {ChangeEvent, useCallback} from 'react'
 import {Checkbox, IconButton} from "@material-ui/core";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@material-ui/icons";
-import {TaskType} from "../App";
+import {TaskStatuses, TaskType} from "../api/todolist-api";
 
 
 export type TaskPropsType = {
     task: TaskType
-    id: string
+    todoListId: string
     changeTaskTitle: (id: string, taskID: string, newTitle: string) => void
-    changeTaskStatus:(id: string, taskID: string, isDone: boolean) => void
+    changeTaskStatus:(id: string, taskID: string, status: TaskStatuses) => void
     removeTask: (id: string, taskID: string) => void
 }
 
-export const Task:React.FC<TaskPropsType> = React.memo(({task,id,changeTaskTitle,changeTaskStatus,removeTask}) => {
+export const Task:React.FC<TaskPropsType> = React.memo(({task,todoListId,changeTaskTitle,
+                                                            changeTaskStatus,removeTask}) => {
     console.log("Task")
-    const onRemoveTaskClickHandler = useCallback(() => removeTask(id,task.id),[removeTask,task.id,id])
+    const onRemoveTaskClickHandler = useCallback(() => removeTask(todoListId,task.taskId),
+        [removeTask,task.taskId,todoListId])
     const changeTaskStatusHandler = useCallback((e: ChangeEvent<HTMLInputElement>) =>
-        changeTaskStatus(id, task.id, e.currentTarget.checked ),[changeTaskStatus,task.id,id])
+        changeTaskStatus(todoListId, task.taskId, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New)
+        ,[changeTaskStatus,task.taskId,todoListId])
     const changeTitle = useCallback((newTitle: string) => {
-        changeTaskTitle(id, task.id, newTitle)},[changeTaskTitle,task.id,id])
+        changeTaskTitle(todoListId, task.taskId, newTitle)},[changeTaskTitle,task.taskId,todoListId])
     return (
-        <div key={task.id} style={{position: 'relative'}}>
-            <Checkbox onChange={changeTaskStatusHandler} checked={task.isDone} />
+        <div key={task.taskId} style={{position: 'relative'}}>
+            <Checkbox onChange={changeTaskStatusHandler} checked={task.status === TaskStatuses.Completed} />
             <EditableSpan title={task.title} changeTitle={changeTitle}/>
             <IconButton onClick={onRemoveTaskClickHandler} style={{ position: 'absolute', right: '5px'} }>
                 <Delete/>
