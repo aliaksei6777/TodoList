@@ -25,7 +25,7 @@ const baseArgs = {
 export const TaskstatusExample = Template.bind({});
 TaskstatusExample.args = {
     ...baseArgs,
-    task: {taskId: '1', status: TaskStatuses.Completed ,title: 'JS',todoListId: '1', addedDate: "", 
+    task: {id: '1', status: TaskStatuses.Completed ,title: 'JS',todoListId: '1', addedDate: "",
         deadline: "", description:"", startDate: "", order: 0, priority: TaskPriorities.Low},
     todoListId: '1'
 };
@@ -33,7 +33,7 @@ TaskstatusExample.args = {
 export const TaskIsNotDoneExample = Template.bind({});
 TaskIsNotDoneExample.args = {
     ...baseArgs,
-    task: {taskId: '2', status: TaskStatuses.New, title: 'HTML',todoListId: '2', addedDate: "",
+    task: {id: '2', status: TaskStatuses.New, title: 'HTML',todoListId: '2', addedDate: "",
         deadline: "", description:"", startDate: "", order: 0, priority: TaskPriorities.Low},
     todoListId: '2'
 };
@@ -44,7 +44,7 @@ TaskIsNotDoneExample.args = {
 export const TaskBaseExample = () => {
     return <>
         <Task task={{
-            taskId: '1', status: TaskStatuses.Completed, title: 'JS', todoListId: '1', addedDate: "",
+            id: '1', status: TaskStatuses.Completed, title: 'JS', todoListId: '1', addedDate: "",
             deadline: "", description: "", startDate: "", order: 0, priority: TaskPriorities.Low
         }}
               todoListId={'1'}
@@ -52,7 +52,7 @@ export const TaskBaseExample = () => {
               changeTaskStatus={changeTaskStatus}
               removeTask={removeTask}/>
         <Task task={{
-            taskId: '2', status: TaskStatuses.New, title: 'TS', todoListId: '2', addedDate: "",
+            id: '2', status: TaskStatuses.New, title: 'TS', todoListId: '2', addedDate: "",
             deadline: "", description: "", startDate: "", order: 0, priority: TaskPriorities.Low
         }}
               todoListId={'2'}

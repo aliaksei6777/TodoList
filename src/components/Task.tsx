@@ -16,15 +16,15 @@ export type TaskPropsType = {
 export const Task:React.FC<TaskPropsType> = React.memo(({task,todoListId,changeTaskTitle,
                                                             changeTaskStatus,removeTask}) => {
     console.log("Task")
-    const onRemoveTaskClickHandler = useCallback(() => removeTask(todoListId,task.taskId),
-        [removeTask,task.taskId,todoListId])
+    const onRemoveTaskClickHandler = useCallback(() => removeTask(todoListId,task.id),
+        [removeTask,task.id,todoListId])
     const changeTaskStatusHandler = useCallback((e: ChangeEvent<HTMLInputElement>) =>
-        changeTaskStatus(todoListId, task.taskId, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New)
-        ,[changeTaskStatus,task.taskId,todoListId])
+        changeTaskStatus(todoListId, task.id, e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New)
+        ,[changeTaskStatus,task.id,todoListId])
     const changeTitle = useCallback((newTitle: string) => {
-        changeTaskTitle(todoListId, task.taskId, newTitle)},[changeTaskTitle,task.taskId,todoListId])
+        changeTaskTitle(todoListId, task.id, newTitle)},[changeTaskTitle,task.id,todoListId])
     return (
-        <div key={task.taskId} style={{position: 'relative'}}>
+        <div key={task.id} style={{position: 'relative'}}>
             <Checkbox onChange={changeTaskStatusHandler} checked={task.status === TaskStatuses.Completed} />
             <EditableSpan title={task.title} changeTitle={changeTitle}/>
             <IconButton onClick={onRemoveTaskClickHandler} style={{ position: 'absolute', right: '5px'} }>

@@ -1,6 +1,7 @@
-import {combineReducers, createStore} from "redux";
-import {tasksReducer} from "./tasks-reducer";
-import {todoListsReducer} from "./todolists-reducer";
+import {applyMiddleware, combineReducers, createStore} from "redux";
+import {TasksActionsType, tasksReducer} from "./tasks-reducer";
+import {TodolistsActionsType, todoListsReducer} from "./todolists-reducer";
+import thunk, {ThunkAction} from "redux-thunk";
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
@@ -10,17 +11,18 @@ const rootReducer = combineReducers({
     todolists: todoListsReducer
 })
 
-let preloadedState;
-const persistedTodostring = localStorage.getItem('app-state')
-if (persistedTodostring) {
-    preloadedState = JSON.parse(persistedTodostring)
-}
+// let preloadedState;
+// const persistedTodostring = localStorage.getItem('app-state')
+// if (persistedTodostring) {
+//     preloadedState = JSON.parse(persistedTodostring)
+// }
+export type AppActionsType = TodolistsActionsType | TasksActionsType
+export type AppThunk<ReturnType = void> = ThunkAction<void,AppRootStateType,unknown,AppActionsType>
+export const store = createStore(rootReducer,applyMiddleware(thunk))
 
-export const store = createStore(rootReducer,preloadedState)
-
-store.subscribe(() => {
-    localStorage.setItem('app-state',JSON.stringify(store.getState()))
-})
+// store.subscribe(() => {
+//     localStorage.setItem('app-state',JSON.stringify(store.getState()))
+// })
 
 // @ts-ignore
 window.store = store

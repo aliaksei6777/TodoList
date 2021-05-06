@@ -1,6 +1,6 @@
 import {v1} from 'uuid';
 import {
-    ActionType,
+    TodolistsActionsType,
     addTodoListAC, changeTodoListFilterAC,
     changeTodoListTitleAC, FilterValuesType,
     removeTodoListAC, TodolistDomainType,

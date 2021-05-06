@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export type TodoListType = {
-    todoListId: string
+    id: string
     addedDate: string
     order: number
     title: string
@@ -14,14 +14,15 @@ type ResponseType<T = {}> = {
     fieldsErrors: Array<string>
     data: T
 }
-type UpdateTaskType = {
+export type UpdateTaskType = {
     title: string
-    description: string | null
+    description: string
     status: number
     priority: number
-    startDate: string | null
-    deadline: string | null
+    startDate: string
+    deadline: string
 }
+
 
 export enum TaskStatuses {
     New = 0,
@@ -44,7 +45,7 @@ export type TaskType = {
     priority: TaskPriorities
     startDate: string
     deadline: string
-    taskId: string
+    id: string
     todoListId: string
     order: number
     addedDate: string
@@ -88,7 +89,7 @@ export const todolistAPI = {
     deleteTask(todolistId: string, taskID: string){
         return instance.delete<ResponseType>(`/todo-lists/${todolistId}/tasks/${taskID}`)
     },
-    updateTask(payload: UpdateTaskType,todolistId: string, taskID: string){
-        return instance.put<ResponseType<{item: TaskType}>>(`/todo-lists/${todolistId}/tasks/${taskID}`,payload)
+    updateTask(model: UpdateTaskType,todolistId: string, taskID: string){
+        return instance.put<ResponseType<{item: TaskType}>>(`/todo-lists/${todolistId}/tasks/${taskID}`,model)
     }
 }
