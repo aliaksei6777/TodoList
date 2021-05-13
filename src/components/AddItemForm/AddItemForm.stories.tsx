@@ -25,6 +25,6 @@ const callback = action('Button inside form clicked')
 
 export const AddItemFormBaseExample = () => {
     return <>
-        <AddItemForm addItem={callback}/>
+        <AddItemForm addItem={callback} entityStatus={"loading"}/>
     </>
 }

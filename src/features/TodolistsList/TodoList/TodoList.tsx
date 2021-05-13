@@ -3,15 +3,17 @@ import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {Task} from "./Task/Task";
 import {TaskStatuses, TaskType} from "../../../api/todolist-api";
-import {FilterValuesType} from "../todolists-reducer";
+import {changeTodolistEntityStatusAC, FilterValuesType} from "../todolists-reducer";
 import {useDispatch} from "react-redux";
 import {fetchTasksTC} from "../tasks-reducer";
 import {EditableSpan} from "../../../components/EditableSpan/EditableSpan";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
+import {RequestStatusType} from "../../../app/app-reducer";
 
 type TodoListPropsType = {
     id: string
     title: string
+    entityStatus: RequestStatusType
     tasks: Array<TaskType>
     filter: FilterValuesType
     changeTodoListFilter: (id: string, newFilterValue: FilterValuesType) => void
@@ -44,7 +46,9 @@ export const Todolist = React.memo((props: TodoListPropsType) => {
     )
 
     const addTask = useCallback((title: string) => props.addTask(props.id,title),[props.addTask,props.id])
-    const removeTodoList = () => props.removeTodoList(props.id)
+    const removeTodoList = () => {
+        props.removeTodoList(props.id)
+    }
     const changeTodolistTitle = useCallback((title: string) => {props.changeTodoListTitle(props.id,title)},
         [props.changeTodoListTitle, props.id])
 
@@ -64,10 +68,11 @@ export const Todolist = React.memo((props: TodoListPropsType) => {
                 <IconButton onClick={removeTodoList}
                             style={{position: 'absolute', right: '2px', top: '2px'}}
                             size={"small"}
+                            disabled={props.entityStatus === 'loading'}
                 >
                     <Delete/>
                 </IconButton></h3>
-            <AddItemForm addItem={addTask}/>
+            <AddItemForm addItem={addTask} entityStatus={props.entityStatus}/>
             <div>
                 {tasks}
                 {!tasksForTodoList.length && <div style={{padding: '10px', color: 'grey'}}>No task</div>}
