@@ -26,12 +26,12 @@ type TodoListPropsType = {
 }
 
 export const Todolist = React.memo((props: TodoListPropsType) => {
-    // let todolist = useSelector<AppRootStateType,TodoListType>(state => state.todolists.filter(todo => todo.id === props.id)[0])
-    const dispatch = useDispatch()
-    // let ownTasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[props.id])
+
     useEffect(() => {
         dispatch(fetchTasksTC(props.id))
     },[])
+
+    const dispatch = useDispatch()
     let tasksForTodoList = props.tasks
     if (props.filter === "active") {
         tasksForTodoList = tasksForTodoList.filter(t => t.status === TaskStatuses.New)
@@ -42,7 +42,7 @@ export const Todolist = React.memo((props: TodoListPropsType) => {
 
     const tasks = tasksForTodoList.map(t =>
        <Task key={t.id} task={t} todoListId={props.id} changeTaskTitle={props.changeTaskTitle}
-             changeTaskStatus={props.changeTaskStatus} removeTask={props.removeTask}/>
+             changeTaskStatus={props.changeTaskStatus} removeTask={props.removeTask} entityStatus={props.entityStatus}/>
     )
 
     const addTask = useCallback((title: string) => props.addTask(props.id,title),[props.addTask,props.id])
@@ -64,7 +64,7 @@ export const Todolist = React.memo((props: TodoListPropsType) => {
     return (
         <div style={{padding: '10px', position: 'relative'}}>
             <h3>
-                <EditableSpan title={props.title} changeTitle={changeTodolistTitle}/>
+                <EditableSpan title={props.title} changeTitle={changeTodolistTitle} entityStatus={props.entityStatus}/>
                 <IconButton onClick={removeTodoList}
                             style={{position: 'absolute', right: '2px', top: '2px'}}
                             size={"small"}

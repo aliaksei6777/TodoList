@@ -3,6 +3,7 @@ import {Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {TaskStatuses, TaskType} from "../../../../api/todolist-api";
 import {EditableSpan} from "../../../../components/EditableSpan/EditableSpan";
+import {RequestStatusType} from "../../../../app/app-reducer";
 
 
 export type TaskPropsType = {
@@ -11,10 +12,11 @@ export type TaskPropsType = {
     changeTaskTitle: (id: string, taskID: string, newTitle: string) => void
     changeTaskStatus:(id: string, taskID: string, status: TaskStatuses) => void
     removeTask: (id: string, taskID: string) => void
+    entityStatus?: RequestStatusType
 }
 
 export const Task:React.FC<TaskPropsType> = React.memo(({task,todoListId,changeTaskTitle,
-                                                            changeTaskStatus,removeTask}) => {
+                                                            changeTaskStatus,removeTask, entityStatus}) => {
     console.log("Task")
     const onRemoveTaskClickHandler = useCallback(() => removeTask(todoListId,task.id),
         [removeTask,task.id,todoListId])
@@ -26,7 +28,7 @@ export const Task:React.FC<TaskPropsType> = React.memo(({task,todoListId,changeT
     return (
         <div key={task.id} style={{position: 'relative'}}>
             <Checkbox onChange={changeTaskStatusHandler} checked={task.status === TaskStatuses.Completed} />
-            <EditableSpan title={task.title} changeTitle={changeTitle}/>
+            <EditableSpan title={task.title} changeTitle={changeTitle} entityStatus={entityStatus}/>
             <IconButton onClick={onRemoveTaskClickHandler} style={{ position: 'absolute', right: '5px'} }>
                 <Delete/>
             </IconButton>
