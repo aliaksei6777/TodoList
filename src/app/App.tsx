@@ -32,13 +32,13 @@ function App({demo = false}: PropsType) {
 
     useEffect(() => {
         dispatch(initializeAppTC())
-    },[])
+    }, [])
 
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
 
     const logoutHandler = useCallback(() => {
         dispatch(logoutTC())
-    },[])
+    }, [])
 
     if (!isInitialized) {
         return <div
@@ -60,14 +60,13 @@ function App({demo = false}: PropsType) {
                         {isLoggedIn && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
                     </Toolbar>
                 </AppBar>
-                {status === "loading" && <LinearProgress color="secondary" />}
+                {status === "loading" && <LinearProgress color="secondary"/>}
                 <Container fixed>
-                    <Switch>
-                        <Route exact path={'/'} render={ () => <TodolistsList demo={demo}/> }/>
-                        <Route path={'/login'} render={ () => <Login/> }/>
-                        <Route path={ '/404' } render={ () => <h1 style={{textAlign: 'center',fontSize: '50px'}}>404: PAGE NOT FOUND</h1> }/>
-                        <Redirect from={'*'} to={'/404'}/>
-                    </Switch>
+                    <Route exact path={'/'} render={() => <TodolistsList demo={demo}/>}/>
+                    <Route path={'/login'} render={() => <Login/>}/>
+                    <Route path={'/404'}
+                           render={() => <h1 style={{textAlign: 'center', fontSize: '50px'}}>404: PAGE NOT FOUND</h1>}/>
+                    <Redirect from={'*'} to={'/404'}/>
                 </Container>
                 <ErrorSnackbar/>
             </div>
