@@ -27,9 +27,13 @@ export const Task:React.FC<TaskPropsType> = React.memo(({task,todoListId,changeT
         changeTaskTitle(todoListId, task.id, newTitle)},[changeTaskTitle,task.id,todoListId])
     return (
         <div key={task.id} style={{position: 'relative'}}>
-            <Checkbox onChange={changeTaskStatusHandler} checked={task.status === TaskStatuses.Completed} />
+            <Checkbox onChange={changeTaskStatusHandler}
+                      disabled={entityStatus === 'loading'}
+                      checked={task.status === TaskStatuses.Completed} />
             <EditableSpan title={task.title} changeTitle={changeTitle} entityStatus={entityStatus}/>
-            <IconButton onClick={onRemoveTaskClickHandler} style={{ position: 'absolute', right: '5px'} }>
+            <IconButton disabled={entityStatus === 'loading'}
+                        onClick={onRemoveTaskClickHandler}
+                        style={{ position: 'absolute', right: '5px'} }>
                 <Delete/>
             </IconButton>
         </div>)

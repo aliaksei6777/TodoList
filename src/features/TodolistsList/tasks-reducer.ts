@@ -1,8 +1,12 @@
-import {AddTodolistActionType, RemoveTodoListActionType, SetTodolistActionType} from "./todolists-reducer";
-import {TaskType, todolistAPI, UpdateTaskType} from "../../api/todolist-api";
+import {
+    AddTodolistActionType,
+    RemoveTodoListActionType,
+    SetTodolistActionType
+} from "./todolists-reducer";
+import {TaskType, todolistAPI, TodoListType, UpdateTaskType} from "../../api/todolist-api";
 import {AppRootStateType, AppThunk} from "../../app/store";
 import {Dispatch} from "redux";
-import {setAppErrorAC, setAppStatusAC} from "../../app/app-reducer";
+import {setAppStatusAC} from "../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error";
 
 const initialState: TaskStateType = {}

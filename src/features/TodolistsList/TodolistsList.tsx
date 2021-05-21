@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect} from "react";
-import {
-    addTodolistTC, changeTodoListFilterAC, changeTodolistTitleTC,
+import {addTodolistTC,
+    changeTodoListFilterAC,
+    changeTodolistTitleTC,
     fetchTodolistTC,
     FilterValuesType,
     removeTodolistTC,
@@ -13,16 +14,26 @@ import {TaskStatuses} from "../../api/todolist-api";
 import {Grid, Paper} from "@material-ui/core";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {Todolist} from "./TodoList/TodoList";
+import {Redirect} from "react-router-dom";
 
-export const TodolistsList: React.FC = () => {
+type PropsType = {
+    demo?: boolean
+}
 
-    useEffect(() => {
-        dispatch(fetchTodolistTC())
-    }, [])
+export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
 
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
     const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (demo || !isLoggedIn){
+            return
+        }
+        dispatch(fetchTodolistTC())
+    }, [])
+
 
     const addTask = useCallback((id: string, title: string) => {
         dispatch(addTaskTC(id, title))
@@ -43,15 +54,22 @@ export const TodolistsList: React.FC = () => {
     const addTodoList = useCallback((title: string) => {
         dispatch(addTodolistTC(title))
     }, [dispatch])
+
     const changeTodoListFilter = useCallback((id: string, newFilterValue: FilterValuesType) => {
         dispatch(changeTodoListFilterAC(id, newFilterValue))
     }, [dispatch])
+
     const removeTodoList = useCallback((id: string) => {
         dispatch(removeTodolistTC(id))
     }, [dispatch])
+
     const changeTodoListTitle = useCallback((id: string, newTitle: string) => {
         dispatch(changeTodolistTitleTC(id, newTitle))
     }, [dispatch])
+
+    if (!isLoggedIn){
+        return <Redirect to={'/login'}/>
+    }
 
     return (
         <>
@@ -67,10 +85,8 @@ export const TodolistsList: React.FC = () => {
                         <Paper style={{padding: "10px"}}>
                             <Todolist
                                 key={tl.id}
-                                id={tl.id}
-                                title={tl.title}
+                                todolist={tl}
                                 tasks={tasks[tl.id]}
-                                filter={tl.filter}
                                 entityStatus={tl.entityStatus}
                                 removeTask={removeTask}
                                 changeTodoListFilter={changeTodoListFilter}
@@ -79,6 +95,7 @@ export const TodolistsList: React.FC = () => {
                                 removeTodoList={removeTodoList}
                                 changeTaskTitle={changeTaskTitle}
                                 changeTodoListTitle={changeTodoListTitle}
+                                demo={demo}
                             />
                         </Paper>
                     </Grid>

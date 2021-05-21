@@ -23,7 +23,7 @@ AddItemFormExample.args = {
 
 const callback = action('Button inside form clicked')
 
-export const AddItemFormBaseExample = () => {
+export const AddItemFormDisableExample = () => {
     return <>
         <AddItemForm addItem={callback} entityStatus={"loading"}/>
     </>

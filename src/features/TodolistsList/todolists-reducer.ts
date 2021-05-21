@@ -30,19 +30,16 @@ export const changeTodoListTitle = (todoListId: string, title: string) =>
     ({type: "CHANGE-TODOLIST-TITLE", todoListId, title} as const)
 export const changeTodoListFilterAC = (todoListId: string, filter: FilterValuesType) =>
     ({type: "CHANGE-TODOLIST-FILTER", todoListId, filter} as const)
-export const setTodolist = (todolists: TodoListType[]) => ({type: 'SET-TODOLIST', todolists} as const)
+export const setTodolists = (todolists: TodoListType[]) => ({type: 'SET-TODOLIST', todolists} as const)
 export const changeTodolistEntityStatusAC = (id: string, entityStatus: RequestStatusType) => ({
-    type: 'CHANGE-TODOLIST-ENTITY-STATUS',
-    id,
-    entityStatus
-} as const)
+    type: 'CHANGE-TODOLIST-ENTITY-STATUS', id, entityStatus} as const)
 
 //thunks
 export const fetchTodolistTC = ():AppThunk => async dispatch => {
     try {
         dispatch(setAppStatusAC('loading'))
         const res = await todolistAPI.getTodolists()
-        dispatch(setTodolist(res.data))
+        dispatch(setTodolists(res.data))
         dispatch(setAppStatusAC('succeeded'))
     } catch (e) {
         handleServerNetworkError(dispatch, e.message)
@@ -94,10 +91,11 @@ export const changeTodolistTitleTC = (id: string, title: string):AppThunk => asy
         handleServerNetworkError(dispatch, e.message)
     }
 }
+
 //types
 export type RemoveTodoListActionType = ReturnType<typeof removeTodoList>
 export type AddTodolistActionType = ReturnType<typeof addTodolist>
-export type SetTodolistActionType = ReturnType<typeof setTodolist>
+export type SetTodolistActionType = ReturnType<typeof setTodolists>
 export type TodolistsActionsType =
     | RemoveTodoListActionType
     | AddTodolistActionType
