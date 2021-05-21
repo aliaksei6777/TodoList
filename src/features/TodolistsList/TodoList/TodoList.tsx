@@ -5,7 +5,6 @@ import {Task} from "./Task/Task";
 import {TaskStatuses, TaskType} from "../../../api/todolist-api";
 import {FilterValuesType, TodolistDomainType} from "../todolists-reducer";
 import {useDispatch} from "react-redux";
-import {fetchTasksTC} from "../tasks-reducer";
 import {EditableSpan} from "../../../components/EditableSpan/EditableSpan";
 import {AddItemForm} from "../../../components/AddItemForm/AddItemForm";
 import {RequestStatusType} from "../../../app/app-reducer";
@@ -26,14 +25,6 @@ type TodoListPropsType = {
 
 export const Todolist = React.memo(({demo = false, ...props}: TodoListPropsType) => {
 
-    useEffect(() => {
-        if (demo) {
-            return
-        }
-        dispatch(fetchTasksTC(props.todolist.id))
-    }, [])
-
-    const dispatch = useDispatch()
     let tasksForTodoList = props.tasks
     if (props.todolist.filter === "active") {
         tasksForTodoList = tasksForTodoList.filter(t => t.status === TaskStatuses.New)

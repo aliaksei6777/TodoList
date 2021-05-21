@@ -2,6 +2,7 @@ import {setAppStatusAC} from '../../app/app-reducer'
 import {authAPI, LoginParamsType} from "../../api/todolist-api";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error";
 import {AppThunk} from "../../app/store";
+import {clearTodosData} from "../TodolistsList/todolists-reducer";
 
 const initialState = {
     isLoggedIn: false
@@ -43,6 +44,7 @@ export const logoutTC = ():AppThunk => async dispatch => {
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(false))
             dispatch(setAppStatusAC('succeeded'))
+            dispatch(clearTodosData())
         } else {
             handleServerAppError(dispatch,res.data)
         }
