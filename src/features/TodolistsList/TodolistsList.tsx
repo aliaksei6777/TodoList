@@ -73,16 +73,16 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false}) => {
 
     return (
         <>
-            <Grid container style={{padding: "20px"}}>
+            <Grid container style={{padding: "15px"}}>
                 <div>
                     <h3>add new todolist</h3>
                     <div><AddItemForm addItem={addTodoList}/></div>
                 </div>
             </Grid>
-            <Grid container spacing={3}>
+            <Grid container={true} spacing={5}>
                 {todolists.map(tl => {
                     return <Grid item key={tl.id}>
-                        <Paper style={{padding: "10px"}}>
+                        <Paper style={{padding: "15px"}} elevation={3}>
                             <Todolist
                                 key={tl.id}
                                 todolist={tl}

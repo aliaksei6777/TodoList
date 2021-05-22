@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {IconButton, TextField} from "@material-ui/core";
-import {ControlPoint} from "@material-ui/icons";
+import {AddBox, ControlPoint} from "@material-ui/icons";
 import {RequestStatusType} from "../../app/app-reducer";
 
 export type AddItemFormPropsType = {
@@ -21,6 +21,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
             setError("Title is required!")
         }
     }
+
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (error !== null) {
             setError(null)
@@ -29,6 +30,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
             addItem()
         }
     }
+
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
@@ -45,7 +47,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                        disabled={props.entityStatus === 'loading'}
                        />
             <IconButton color={"primary"} onClick={addItem} disabled={props.entityStatus === 'loading'}>
-                <ControlPoint/>
+                <AddBox/>
             </IconButton>
         </div>
     )
